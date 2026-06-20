@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexora | Upload Dataset</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body class="dark-theme">
+
+    <!-- =========================================================
+    BACKEND INTEGRATION GUIDE
+
+    FILE INPUT
+    #uploadInput
+
+    DRAG DROP AREA
+    #uploadArea
+
+    STATUS
+    #uploadStatus
+
+    DATASET INFO
+    #fileName
+    #rowCount
+    #columnCount
+    #fileSize
+
+    TABLE BODY
+    #previewTableBody
+
+    START BUTTON
+    #startListeningBtn
+
+    ========================================================== -->
+
+
+    <!-- navbar-->
+
+    <nav class="navbar navbar-expand-lg navbar-dark py-4">
+
+        <div class="container">
+
+            <a class="navbar-brand logo-text" href="index.html">
+                NEXORA
+            </a>
+
+            <div class="ms-auto d-flex align-items-center gap-3">
+
+                <button id="themeToggle" class="theme-btn">
+                    <i class="bi bi-sun-fill"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!--UPLOAD STEPPER -->
+
+    <section class="upload-page">
+
+        <div class="container">
+
+            <div class="upload-steps">
+
+                <div class="step active">
+                    Upload
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step">
+                    Preview
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step">
+                    Ready
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+            PAGE TITLE
+            ===================================================== -->
+
+            <div class="text-center mb-5">
+
+                <h1 class="upload-title">
+
+                    Bring Your Data
+
+                </h1>
+
+                <p class="upload-subtitle">
+
+                    Every discovery begins somewhere.
+                    Upload a dataset and let Nexora start listening.
+
+                </p>
+
+            </div>
+
+
+            <!-- UPLOAD BOX -->
+
+            <div class="upload-box"
+                id="uploadArea">
+
+                <!-- BACKEND:
+                Attach drag & drop functionality.
+
+                Expected Flow:
+
+                User uploads file
+                ->
+                POST /upload
+                ->
+                Receive metadata
+                ->
+                Update dataset card
+
+                Required Input:
+                #uploadInput
+                -->
+
+                <i class="bi bi-cloud-arrow-up upload-icon"></i>
+
+                <h4>
+
+                    Drag & Drop your file here
+
+                </h4>
+
+                <p>
+
+                    or
+
+                </p>
+
+                <input
+                    type="file"
+                    id="uploadInput"
+                    hidden>
+
+                <button
+                    class="btn btn-primary browse-btn"
+                    onclick="document.getElementById('uploadInput').click()">
+
+                    Browse Files
+
+                </button>
+
+                <div class="supported-formats">
+
+                    <span>CSV</span>
+                    <span>Excel</span>
+                    <span>JSON</span>
+
+                </div>
+
+                <div
+                    id="uploadStatus"
+                    class="mt-4">
+
+                    Waiting for upload...
+
+                </div>
+
+            </div>
+
+
+
+            <!--DATASET PREVIEW CARD -->
+
+            <div class="dataset-card mt-5">
+
+                <div class="dataset-header">
+
+                    <div>
+                        <i class="bi bi-check-circle-fill success-icon"></i>
+                    </div>
+
+                    <div>
+                        <h4>
+                            Dataset Loaded Successfully
+                        </h4>
+                    </div>
+
+                </div>
+
+
+                <!-- BACKEND:
+                Replace values below after upload.
+
+                IDs:
+                #fileName
+                #rowCount
+                #columnCount
+                #fileSize
+                -->
+
+                <div class="row mt-4">
+
+                    <div class="col-md-3">
+
+                        <small>File Name</small>
+
+                        <h6 id="fileName">
+
+                            sales_data.csv
+
+                        </h6>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <small>Rows</small>
+
+                        <h6 id="rowCount">
+
+                            10,425
+
+                        </h6>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <small>Columns</small>
+
+                        <h6 id="columnCount">
+
+                            18
+
+                        </h6>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <small>Size</small>
+
+                        <h6 id="fileSize">
+
+                            2.4 MB
+
+                        </h6>
+
+                    </div>
+
+                </div>
+
+
+
+                <!--TABLE PREVIEW -->
+
+                <div class="table-responsive mt-4">
+
+                    <!-- BACKEND:
+                    Populate first 5 rows.
+
+                    Required ID:
+                    #previewTableBody
+                    -->
+
+                    <table class="table table-dark custom-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+                                <th>Region</th>
+                                <th>Category</th>
+                                <th>Sales</th>
+                                <th>Profit</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="previewTableBody">
+
+                            <tr>
+                                <td>2024-01-01</td>
+                                <td>North</td>
+                                <td>Electronics</td>
+                                <td>12,540</td>
+                                <td>2,310</td>
+                            </tr>
+
+                            <tr>
+                                <td>2024-01-01</td>
+                                <td>South</td>
+                                <td>Furniture</td>
+                                <td>9,210</td>
+                                <td>1,200</td>
+                            </tr>
+
+                            <tr>
+                                <td>2024-01-02</td>
+                                <td>East</td>
+                                <td>Electronics</td>
+                                <td>8,430</td>
+                                <td>1,540</td>
+                            </tr>
+
+                            <tr>
+                                <td>2024-01-02</td>
+                                <td>West</td>
+                                <td>Office</td>
+                                <td>6,780</td>
+                                <td>980</td>
+                            </tr>
+
+                            <tr>
+                                <td>2024-01-03</td>
+                                <td>North</td>
+                                <td>Furniture</td>
+                                <td>7,230</td>
+                                <td>1,100</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- CTA button -->
+
+            <!-- BACKEND:
+            Only allow redirect after successful upload.
+            -->
+
+            <div class="text-center mt-5">
+
+                <a
+                    href="dashboard.html"
+                    id="startListeningBtn"
+                    class="btn start-btn">
+
+                    Start Listening
+
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+                <p class="mt-3 text-secondary">
+                    Nexora is ready to uncover the story behind your data.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
