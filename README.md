@@ -1,273 +1,420 @@
-# PromptLens
+<div align="center">
 
-**AI-Powered Business Intelligence | Ask Questions. Get Dashboards.**
+<br/>
 
-PromptLens is an intelligent data analytics platform that transforms plain-English business questions into interactive, multi-chart dashboards in seconds. No SQL knowledge required. No manual chart configuration. Just upload data and ask.
+### **Conversational AI for Instant Business Intelligence**
+*Ask a question in plain English. Get a live interactive dashboard in seconds.*
 
-## 🎯 What It Does
+<br/>
 
-PromptLens combines natural language processing with data intelligence to deliver:
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Gemini](https://img.shields.io/badge/Gemini-2.0_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 
-- **Instant Dashboard Generation**: Ask a question, get interactive charts automatically
-- **Schema-Aware Analysis**: Understands your data structure and generates accurate queries
-- **Multi-Chart Intelligence**: Automatically selects the best chart types for your data
-- **Natural Language Insights**: Results summarized in plain English, not technical jargon
-- **CSV Upload Support**: Works with your own datasets or demo data
-- **SQL Inspection**: View generated queries for transparency and trust
+<br/>
+
+> *"Show me monthly view trends broken down by category and highlight the top-performing region"*
+> → **Full interactive dashboard. No SQL. No configuration. Just ask.**
+
+<br/>
+
+</div>
+
+---
+
+## 📖 Table of Contents
+
+- [What is PromptLens?](#-what-is-PromptLens)
+- [Live Demo](#-live-demo)
+- [Features](#-features)
+- [How It Works](#-how-it-works)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [API Reference](#-api-reference)
+- [Docker Deployment](#-docker-deployment)
+- [Example Queries](#-example-queries)
+- [Team](#-team)
+
+---
+
+## 🧠 What is PromptLens?
+
+**PromptLens** is an AI-powered Business Intelligence platform that eliminates the gap between business questions and data answers.
+
+In most organisations, getting a simple chart requires:
+1. Writing a ticket to the data team
+2. Waiting 2–3 days
+3. Receiving a static screenshot
+
+**PromptLens changes this entirely.** A non-technical executive types a question in plain English — and within seconds, a fully interactive, multi-chart dashboard appears. No SQL. No BI tool training. No waiting.
+
+### Who is it for?
+
+| Persona | Problem Solved |
+|---|---|
+| 🏢 CXO / Executive | Gets instant answers without depending on data teams |
+| 📊 Business Analyst | Explores data 10x faster without writing queries |
+| 🎓 Student / Researcher | Analyses large datasets through conversation |
+
+---
+
+## 🎬 Live Demo
+
+> Try these three queries to see the full power of the system:
+
+| Query | What it demonstrates |
+|---|---|
+| `"Show me monthly view trends for 2024 broken down by category"` | Time-series line chart with multi-category breakdown |
+| `"Which region has the highest average engagement rate and how does sentiment compare?"` | Multi-chart dashboard with computed metrics |
+| `"Compare total views for videos with ads enabled vs disabled across all languages"` | Grouped bar chart with filter logic |
+
+---
+
+## ✨ Features
+
+### Core Features
+- 🗣️ **Natural Language Queries** — Type questions exactly as you'd ask a colleague
+- 📊 **Auto Chart Selection** — AI picks the right chart type (bar, line, pie, scatter, area) automatically
+- 🧩 **Multi-Chart Dashboards** — One question generates 1–4 complementary charts
+- 💡 **Plain-English Insights** — Every dashboard includes a human-readable summary
+- ⚡ **Real-Time Rendering** — Charts appear within seconds of asking
+
+### Intelligence Features
+- 🤖 **Gemini 2.0 Flash** — Powered by Google's latest fast LLM
+- 🛡️ **Hallucination Guard** — System reports when it can't answer rather than making up data
+- 🔄 **Agentic Self-Correction** — If SQL fails, AI automatically fixes and retries
+- 📐 **Schema-Aware Prompting** — Full database context injected into every query
+
+### UX Features
+- 💬 **Follow-up Queries** — Chat with your dashboard: *"Now filter this to only the US"*
+- 📁 **CSV Upload** — Upload any CSV and immediately start querying it
+- 🎯 **Sample Question Chips** — One-click starter questions for new users
+- ⏳ **Animated Loading States** — Progress indicators while dashboard generates
+- 📱 **Responsive Design** — Works on desktop and tablet
+
+---
+
+## ⚙️ How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     USER'S BROWSER                          │
+│                                                             │
+│   ┌─────────────────────────────────────────────────┐       │
+│   │              REACT FRONTEND                     │       │
+│   │           (runs on port 3000)                   │       │
+│   │                                                 │       │
+│   │   User types: "Show me Q3 sales by region"      │       │
+│   │                      │                          │       │
+│   │                      ▼                          │       │
+│   │   ┌─────────────────────────────────────┐       │       │
+│   │   │            api.js                   │       │       │
+│   │   │   (THIS IS YOUR FILE — YOU OWN THIS)│       │       │
+│   │   │                                     │       │       │
+│   │   │   submitQuery("Show me Q3 sales")   │       │       │
+│   │   └──────────────────┬──────────────────┘       │       │
+│   └───────────────────── │ ────────────────────────-┘       │
+│                          │                                  │
+└──────────────────────────│──────────────────────────────────┘
+                           │
+                           │  HTTP REQUEST
+                           │  POST http://localhost:8000/query
+                           │  Body: { "query": "Show me Q3 sales" }
+                           │
+                    (THE INTERNET / NETWORK)
+                           │
+                           │  HTTP RESPONSE
+                           │  Body: { "success": true, "charts": [...] }
+                           │
+┌──────────────────────────│──────────────────────────────────┐
+│                          │                                  │
+│   ┌───────────────────── │ ────────────────────────────┐    │
+│   │           FASTAPI BACKEND                          │    │
+│   │           (runs on port 8000)                      │    │
+│   │                      │                             │    │
+│   │                      ▼                             │    │
+│   │         Receives request at /query                 │    │
+│   │                      │                             │    │
+│   │                      ▼                             │    │
+│   │              Calls Gemini API                      │    │
+│   │                      │                             │    │
+│   │                      ▼                             │    │
+│   │           Runs SQL on Database                     │    │
+│   │                      │                             │    │
+│   │                      ▼                             │    │
+│   │         Returns JSON with charts                   │    │
+│   └────────────────────────────────────────────────────┘    │
+│                    PYTHON SERVER                            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### The Prompt Engineering Pipeline
+
+What makes PromptLens accurate is not just calling an LLM — it's **what we tell the LLM before every query**:
+
+1. **Schema Injection** — Full table structure, column names, data types, and value ranges are prepended to every prompt so Gemini never guesses column names
+2. **Chart Selection Rules** — Explicit rules map data shapes to chart types (time-series → line, categorical → bar, parts-of-whole → pie)
+3. **SQL Guard Rules** — Edge cases like `ads_enabled` being stored as TEXT `'True'`/`'False'` are documented so SQL is correct first time
+4. **Structured JSON Output** — Gemini is instructed to return a strict JSON schema — no free-text parsing needed
+5. **Self-Correction Loop** — Failed SQL is sent back to Gemini with the error message for automatic fixing
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| **LLM** | Google Gemini 2.0 Flash | Natural language → SQL + chart config |
+| **Backend** | Python 3.11 + FastAPI | REST API, query orchestration |
+| **Database** | SQLite | Fast local query execution on 1M rows |
+| **Frontend** | React 18 + Vite | Interactive UI |
+| **Charts** | Recharts | Responsive interactive visualisations |
+| **Styling** | Tailwind CSS | Dark theme dashboard UI |
+| **HTTP** | Axios | Frontend ↔ Backend communication |
+| **Deployment** | Docker + Docker Compose | One-command deployment |
+
+---
+
+## 📁 Project Structure
+
+```
+PromptLens/
+│
+├── 📂 backend/
+│   ├── main.py           ← FastAPI server (API routes)
+│   ├── llm.py            ← Gemini integration + prompt engineering
+│   ├── db.py             ← SQLite query runner + SQL validation
+│   ├── schema.py         ← Database schema metadata for AI context
+│   ├── requirements.txt  ← Python dependencies
+│   └── Dockerfile        ← Backend container
+│
+├── 📂 frontend/
+│   ├── src/
+│   │   ├── App.jsx                  ← Main app shell
+│   │   ├── components/
+│   │   │   ├── QueryInput.jsx       ← Search bar + sample chips
+│   │   │   ├── DashboardGrid.jsx    ← Chart layout grid
+│   │   │   ├── ChartCard.jsx        ← Individual chart renderer
+│   │   │   └── InsightCard.jsx      ← AI insight display
+│   │   └── services/
+│   │       └── api.js               ← All backend API calls
+│   ├── Dockerfile         ← Frontend container
+│   └── nginx.conf         ← Production static file server
+│
+├── docker-compose.yml     ← Runs everything with one command
+└── README.md
+```
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js** 16+ (for frontend)
-- **Python** 3.9+ (for backend)
-- **Git**
+Make sure you have these installed:
+- [Python 3.11+](https://python.org/downloads)
+- [Node.js 18+](https://nodejs.org)
+- [Git](https://git-scm.com)
+- A free [Gemini API Key](https://aistudio.google.com/apikey)
 
-### Quick Start
+---
 
-#### 1. Clone & Setup
+### Option A — Run Locally (Development)
 
+**1. Clone the repository**
 ```bash
-git clone <repository-url>
-cd promptlens
+git clone https://github.com/your_github_account_here/.git
+cd PromptBI
 ```
 
-#### 2. Frontend Setup
+**2. Set up the backend**
+```bash
+cd backend
+python -m pip install -r requirements.txt
+```
 
+**3. Add your API key**
+
+Create a `.env` file inside the `backend` folder:
+```
+GEMINI_API_KEY=your_api_key_here
+```
+
+**4. Add your dataset**
+
+Place your CSV file inside the `backend` folder and rename it to `data.csv`.
+
+**5. Start the backend**
+```bash
+python main.py
+```
+✅ Backend running at `http://localhost:8000`
+✅ API docs at `http://localhost:8000/docs`
+
+**6. Set up and start the frontend** (new terminal)
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+✅ Frontend running at `http://localhost:5173`
 
-The frontend will be available at `http://localhost:5173`
+---
 
-#### 3. Backend Setup
-
-```bash
-cd backend
-python -m venv .venv
-
-# On Windows:
-.\.venv\Scripts\activate
-
-# On macOS/Linux:
-source .venv/bin/activate
-
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-The backend API will be available at `http://localhost:8000`
-
-### Accessing the Application
-
-1. Open your browser to `http://localhost:5173`
-2. Upload a CSV file or use the sample dataset
-3. Ask a question about your data
-4. View the generated dashboard and insights
-
-## 📁 Project Structure
-
-```
-promptlens/
-├── frontend/                    # React + TypeScript + Vite
-│   ├── src/
-│   │   ├── pages/             # Page components (Home, Demo, Docs, System)
-│   │   ├── App.tsx            # Main application component
-│   │   └── main.tsx           # Entry point
-│   ├── package.json
-│   ├── vite.config.ts
-│   └── tsconfig.json
-│
-├── backend/                     # FastAPI + Python
-│   ├── app/
-│   │   ├── main.py            # FastAPI application & endpoints
-│   │   └── data/
-│   │       └── uploads/       # User uploaded files
-│   ├── requirements.txt
-│   └── README.md
-│
-├── docs/                        # Documentation
-└── README.md                    # This file
-```
-
-## 🏗️ Architecture Overview
-
-PromptLens follows a full-stack architecture:
-
-### Frontend (React + TypeScript)
-- **Upload Interface**: CSV file ingestion with validation
-- **Query Interface**: Natural language input with history
-- **Dashboard Rendering**: Multi-chart visualization using Recharts
-- **SQL Inspector**: View and inspect generated queries
-- **Responsive Design**: Desktop-first, dark theme with warm palette
-
-### Backend (FastAPI)
-- **File Handling**: Secure CSV upload and processing
-- **Schema Detection**: Automatic type inference and schema analysis
-- **LLM Pipeline**: Gemini-powered SQL generation and insights
-- **Query Execution**: SQLite-based read-only query execution
-- **Error Recovery**: Automatic SQL correction and retry logic
-
-### Data Layer
-- **SQLite**: In-memory or file-based dataset storage
-- **Session Scoping**: Per-session data isolation
-- **Read-Only Access**: Enforced through query guards
-
-## 🔧 Tech Stack
-
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Frontend** | React 18, TypeScript, Vite, Tailwind CSS | Modern UI framework with fast builds |
-| **Backend** | FastAPI, Python 3.9+ | High-performance async API |
-| **Database** | SQLite | Lightweight, serverless data storage |
-| **LLM** | Google Gemini | Schema-aware SQL & insight generation |
-| **Visualization** | Recharts | Interactive, responsive charts |
-| **Build** | Vite | Lightning-fast development & production builds |
-
-## 📊 Key Features
-
-### Data Upload
-- Support for CSV files
-- Automatic schema detection
-- Type inference for columns
-- Preview before analysis
-
-### Intelligent Querying
-- Natural language question parsing
-- Schema-aware SQL generation
-- Contextual chart type selection
-- Multi-chart dashboard composition
-
-### Results & Insights
-- Interactive chart visualizations
-- Plain English summaries
-- SQL query inspection
-- Follow-up query support with history
-
-### Safety & Reliability
-- Read-only query execution
-- Hallucination guards
-- Automatic error recovery
-- Clear error messaging
-
-## 🛠️ Development
-
-### Running Tests
+### Option B — Run with Docker (One Command)
 
 ```bash
-# Frontend tests
-cd frontend
-npm run test
+git clone https://github.com/your_github_account_here/PromptBI.git
+cd PromptBI
 
-# Backend tests
-cd backend
-pytest
+# Add your API key to a .env file in the root
+echo "GEMINI_API_KEY=your_api_key_here" > .env
+
+# Place your data.csv in the backend folder, then:
+docker-compose up --build
 ```
 
-### Building for Production
+✅ App live at `http://localhost`
+
+---
+
+## 📡 API Reference
+
+### `POST /query`
+Convert a natural language question into a dashboard.
+
+**Request:**
+```json
+{
+  "query": "Show me monthly views by category",
+  "session_id": null,
+  "conversation_history": []
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "dashboard_title": "Monthly Views by Category — 2024",
+  "insight": "Education and Tech Reviews show strong growth through Q3...",
+  "charts": [
+    {
+      "chart_id": "chart_1",
+      "title": "Monthly Views Trend",
+      "chart_type": "line",
+      "x_key": "month",
+      "y_keys": ["total_views"],
+      "data": [{ "month": "2024-01", "total_views": 4231500 }]
+    }
+  ]
+}
+```
+
+### `GET /stats`
+Returns dataset statistics for the UI header.
+
+### `GET /samples`
+Returns 8 sample questions shown as clickable chips.
+
+### `POST /upload-csv`
+Upload a custom CSV file. Returns a `session_id` for querying it.
+
+### `GET /health`
+Health check endpoint.
+
+---
+
+## 🐳 Docker Deployment
+
+The entire stack is containerised and connects automatically:
+
+```
+┌─────────────────────────────────────────┐
+│          Docker Compose Network         │
+│                                         │
+│  ┌──────────────┐   ┌────────────────┐  │
+│  │   Frontend   │──▶│    Backend     │  │
+│  │  React+Nginx │   │    FastAPI     │  │
+│  │   Port: 80   │   │   Port: 8000   │  │
+│  └──────────────┘   └───────┬────────┘  │
+│                             │           │
+│                      ┌──────▼──────┐    │
+│                      │   SQLite    │    │
+│                      │  videos.db  │    │
+│                      └─────────────┘    │
+└─────────────────────────────────────────┘
+```
 
 ```bash
-# Frontend
-cd frontend
-npm run build
-
-# Backend
-# Deploy using Docker or standard Python deployment
+docker-compose up --build    # Start everything
+docker-compose down          # Stop everything
+docker-compose logs backend  # View backend logs
 ```
 
-### Code Structure
+---
 
-- **Frontend**: Component-based React with TypeScript
-- **Backend**: API-first FastAPI with modular endpoints
-- **Configuration**: Environment-based settings
+## 💬 Example Queries
 
-## 📚 Documentation
+Here are queries you can try, from simple to complex:
 
-- [Frontend README](./frontend/README.md) - React app documentation
-- [Backend README](./backend/README.md) - FastAPI setup and endpoints
-- [Architecture Document](./_bmad-output/planning-artifacts/architecture.md) - Technical design decisions
-- [Product Requirements](./_bmad-output/planning-artifacts/prd.md) - Full product specification
-
-## 🤝 Contributing
-
-1. Create a feature branch from `main`
-2. Make your changes following the project structure
-3. Test thoroughly before submitting
-4. Create a pull request with clear description
-
-## 📝 API Endpoints
-
-### Health Check
+**Simple**
 ```
-GET /health
+Show me total views by region
+```
+```
+What are the top 5 categories by likes?
 ```
 
-### File Upload
+**Intermediate**
 ```
-POST /upload
-Content-Type: multipart/form-data
-Body: file (CSV)
+Compare average sentiment score across all languages
 ```
-
-### Query Execution
 ```
-POST /query
-Content-Type: application/json
-Body: { "question": "...", "dataset_id": "..." }
+Show videos with ads enabled vs disabled — which gets more views?
 ```
 
-For complete API documentation, visit `http://localhost:8000/docs` when the backend is running.
+**Complex**
+```
+Show me monthly view trends for 2024 broken down by category
+and tell me which category peaked earliest
+```
+```
+Give me a full engagement analysis — views, likes, comments
+and shares broken down by region
+```
 
-## 🎓 Use Cases
+**Follow-up (chat with dashboard)**
+```
+First ask: "Show me views by region"
+Then ask:  "Now filter this to only show English language videos"
+Then ask:  "Which of these regions has the best sentiment score?"
+```
 
-- **Quick Data Exploration**: Analyze datasets without SQL knowledge
-- **Business Reporting**: Generate reports from raw data in seconds
-- **Data Debugging**: Investigate data issues with natural language queries
-- **Executive Summaries**: Get key insights with visual context
-- **Demo & Presentation**: Impress stakeholders with instant analytics
+---
 
-## ⚙️ Performance
+## 👥 Team
 
-- **Query Response Time**: < 3 seconds for typical datasets
-- **Dashboard Rendering**: < 500ms for multi-chart layouts
-- **File Upload**: Supports files up to 50MB
-- **Concurrent Sessions**: Multiple users with isolated data contexts
+| Name | Role |
+|---|---|
+| Archita | Backend + AI/ML + Project Lead |
+| Sonu Jha | Integrating Docker with Frontend and Backend |
+| Samkit Jain | Frontend + UI/UX |
 
-## 🔒 Security
+---
 
-- **Read-Only Queries**: All database access is read-only
-- **Session Isolation**: Each session has independent data scope
-- **No Secrets in Code**: Environment-based configuration
-- **Input Validation**: All user inputs validated before processing
+<div align="center">
 
-## 📦 Deployment
+<br/>
 
-### Local Development
-See [Quick Start](#quick-start) above
+*Built with 🤖 Gemini AI · ⚡ FastAPI · ⚛️ React*
 
-### Docker Support
-The project includes Docker-friendly setup for containerized deployment.
+**PromptLens — because data should answer to you, not the other way around.**
 
-### Cloud Deployment
-Can be deployed to major cloud platforms (AWS, GCP, Azure) with minimal configuration changes.
+<br/>
 
-## 🐛 Troubleshooting
-
-### Frontend won't load
-- Ensure Node.js 16+ is installed: `node --version`
-- Check that backend is running on `http://localhost:8000`
-- Clear browser cache and try again
-
-### Backend won't start
-- Verify Python 3.9+ is installed: `python --version`
-- Ensure all dependencies are installed: `pip install -r requirements.txt`
-- Check that port 8000 is available
-
-### CSV upload fails
-- Verify CSV format (comma-separated values)
-- Check file size (max 50MB)
-- Ensure headers are present in first row
-- Try with sample CSV from demo
-**For more information**, visit the [documentation](./docs) folder or review the [architecture decisions document](./_bmad-output/planning-artifacts/architecture.md).
+</div>
